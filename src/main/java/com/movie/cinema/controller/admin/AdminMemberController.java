@@ -31,4 +31,11 @@ public class AdminMemberController {
         mav.setViewName("admin/member/memberList");
         return mav;
     }
+
+    @RequestMapping("/memberDetail")
+    public ModelAndView memberDetail(@RequestParam Long idx, ModelAndView mav) {
+
+        mav.setViewName("admin/member/memberDetail");
+        return mav;
+    }
 }
