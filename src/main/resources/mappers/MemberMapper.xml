@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.movie.cinema.mapper.MemberMapper">
+    <select id="memberList" resultType="map">
+        SELECT
+            M.IDX AS IDX
+            , U.ID AS ID
+            , U.STATUS AS STATUS
+            , M.NAME AS NAME
+            , M.MOBILE AS MOBILE
+            , M.POST AS POST
+            , M.ADDRESS AS ADDRESS
+            , M.ADDRESSDETAIL AS ADDRESSDETAIL
+            , M.GRADE AS GRADE
+            , M.POINT AS POINT
+            , M.EMAIL AS EMAIL
+        FROM
+            T_USER U
+            INNER JOIN T_MEMBER M ON (U.IDX=M.IDX)
+        WHERE
+            1 = 1
+        ORDER BY
+            M.IDX DESC
+    </select>
+</mapper>
