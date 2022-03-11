@@ -7,4 +7,23 @@
     <select id="findById" resultType="User">
         SELECT * FROM T_USER WHERE id = #{id}
     </select>
+
+    <update id="userUpdate">
+        UPDATE T_USER SET
+        <if test="passwd != null and passwd != ''">
+            PASSWD = #{passwd}
+        </if>
+        <if test="state != null and state != ''">
+            STATE = #{state}
+        </if>
+        <if test="authority != null and authority != ''">
+            AUTHORITY = #{authority}
+        </if>
+        WHERE
+        IDX = #{idx}
+    </update>
+
+    <delete id="userDel">
+        DELETE FROM T_USER WHERE IDX = @{idx}
+    </delete>
 </mapper>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/admin/fragment/header.html :: header"></head>
+<body class="sb-nav-fixed">
+<script>
+    function daumAddressApi() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var post = '';
+                var address = '';
+
+                post = data.zonecode;
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    address = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    address = data.jibunAddress;
+                }
+
+                $("#post").val(post);
+                $("#address").val(address);
+            }
+        }).open();
+    }
+
+    function memberUpdate(f) {
+        if(f.name.value == "") {
+            alert("이름을 입력해주세요.");
+            f.name.focus();
+            return;
+        }
+        if(f.email.value == "") {
+            alert("이메일을 입력해주세요.");
+            f.email.focus();
+            return;
+        }
+        if(f.mobile.value == "") {
+            alert("휴대폰번호를 입력해주세요.");
+            f.mobile.focus();
+            return;
+        }
+        if(f.post.value == "") {
+            alert("우편번호를 입력해주세요.");
+            f.post.focus();
+            return;
+        }
+        if(f.address.value == "") {
+            alert("주소를 입력해주세요.");
+            f.address.focus();
+            return;
+        }
+        if(f.addressDetail.value == "") {
+            alert("상세주소를 입력해주세요.");
+            f.addressDetail.focus();
+            return;
+        }
+
+        f.submit();
+    }
+</script>
+<nav th:replace="/admin/fragment/topnav.html :: topnav"></nav>
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <nav th:replace="/admin/fragment/sidenav.html :: sidenav"></nav>
+    </div>
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-7">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card-header"><h3 class="text-center font-weight-light my-4">회원 수정</h3></div>
+                            <div class="card-body">
+                                <form name="memberForm" action="/admin/member/memberUpdate" method="post">
+                                    <input type="hidden" id="idx" name="idx" th:value="${member.IDX}">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0">
+                                                <input class="form-control" id="id" name="id" type="text" placeholder="아이디" th:value="${member.ID}" readonly />
+                                                <label for="id">아이디</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input class="form-control" id="name" name="name" type="text" placeholder="이름" th:value="${member.NAME}" />
+                                                <label for="name">이름</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0">
+                                                <input class="form-control" id="passwd" name="passwd" type="password" placeholder="비밀번호" />
+                                                <label for="passwd">비밀번호</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input class="form-control" id="passwdChk" name="passwdChk" type="password" placeholder="비밀번호 확인" />
+                                                <label for="passwdChk">비밀번호 확인</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="email" name="email" type="email" placeholder="이메일"  th:value="${member.EMAIL}" />
+                                        <label for="email">이메일</label>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0">
+                                                <input class="form-control" id="mobile" name="mobile" type="text" placeholder="-없이 입력해주세요" th:value="${member.MOBILE}" />
+                                                <label for="mobile">휴대폰</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0">
+                                                <input class="form-control" id="point" name="point" type="text" placeholder="포인트" th:value="${member.POINT}" />
+                                                <label for="point">포인트</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0">
+                                                <select class="form-control" id="state" name="state">
+                                                    <option th:selected="${member.STATE} == '100'" th:value="100" >사용중</option>
+                                                    <option th:selected="${member.STATE} == '200'" th:value="200" >휴면</option>
+                                                    <option th:selected="${member.STATE} == '300'" th:value="300" >삭제</option>
+                                                </select>
+                                                <label for="state">상태</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0">
+                                                <select class="form-control" id="grade" name="grade">
+                                                    <option th:selected="${member.GRADE} == 'B'" th:value="B" th:text="BRONZE"></option>
+                                                    <option th:selected="${member.GRADE} == 'S'" th:value="S" th:text="GOLD"></option>
+                                                    <option th:selected="${member.GRADE} == 'G'" th:value="G" th:text="SILVER"></option>
+                                                    <option th:selected="${member.GRADE} == 'V'" th:value="V" th:text="VIP"></option>
+                                                </select>
+                                                <label for="grade">회원등급</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0">
+                                                <input class="form-control" id="post" name="post" type="text" placeholder="우편번호" th:value="${member.POST}" />
+                                                <label for="post">우편번호</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-0">
+                                            <div class="d-grid"><button class="btn btn-primary btn-block" type="button" th:text="우편번호찾기" onclick="daumAddressApi();"></button></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="address" name="address" type="text" placeholder="주소" th:value="${member.ADDRESS}" />
+                                        <label for="address">주소</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="addressDetail" name="addressDetail" type="text" placeholder="상세주소" th:value="${member.ADDRESSDETAIL}" />
+                                        <label for="addressDetail">상세주소</label>
+                                    </div>
+                                    <div class="mt-4 mb-0">
+                                        <div class="d-grid"><button type="button" class="btn btn-primary btn-block" onclick="memberUpdate(this.form);" th:text="회원수정"></div>
+                                    </div>
+                                    <div class="mt-4 mb-0">
+                                        <div class="d-grid"><a class="btn btn-primary btn-block" th:href="@{/admin/member/memberList}">목록으로</a></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="/admin/fragment/footer.html :: footer"></footer>
+    </div>
+</div>
+<script th:replace="/admin/fragment/tablejs.html :: tablejs"></script>
+</body>
+</html>

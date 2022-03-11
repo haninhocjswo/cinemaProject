@@ -1,6 +1,7 @@
 package com.movie.cinema.controller.admin;
 
 import com.movie.cinema.service.MemberService;
+import com.movie.cinema.utils.CommonCode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,12 +22,9 @@ public class AdminMemberController {
     }
 
     @RequestMapping("/memberList")
-    public ModelAndView memberList(@RequestParam(required = true) Map<String, Object> map, ModelAndView mav) {
+    public ModelAndView memberList(@RequestParam(required = false) Map<String, Object> map, ModelAndView mav) {
         List<Map<String, Object>> members = memberService.memberList(map);
-        System.out.println("size : " + members.size());
-        for(Map<String, Object> member : members) {
-            System.out.println("sss : " + member.entrySet());
-        }
+
         mav.addObject("members", members);
         mav.setViewName("admin/member/memberList");
         return mav;
@@ -34,8 +32,30 @@ public class AdminMemberController {
 
     @RequestMapping("/memberDetail")
     public ModelAndView memberDetail(@RequestParam Long idx, ModelAndView mav) {
+        Map<String, Object> member = memberService.memberDetail(idx);
 
         mav.setViewName("admin/member/memberDetail");
+        mav.addObject("member", member);
+        return mav;
+    }
+
+    @RequestMapping("/memberUpdate")
+    public ModelAndView memberUpdate(ModelAndView mav, @RequestParam(required = true) Map<String, Object> memberForm)  {
+        memberService.memberUpdate(memberForm);
+        mav.setViewName("redirect:/admin/member/memberList");
+        return mav;
+    }
+
+    @RequestMapping("/memberDel")
+    public ModelAndView memberDel(Long idx, ModelAndView mav) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        resultMap.clear();
+
+        resultMap.put("idx", idx);
+        resultMap.put("state", CommonCode.MEMBER_STATE_DEL);
+        memberService.memberDel(resultMap);
+        mav.setViewName("redirect:/admin/member/memberList");
         return mav;
     }
 }

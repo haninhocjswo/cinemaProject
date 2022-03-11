@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.movie.cinema.mapper.CinemaMapper">
+    <select id="cinemaList" resultType="map">
+        SELECT
+            IDX AS IDX
+            , NAME AS NAME
+            , CODE AS CODE
+            , POST AS POST
+            , ADDRESS AS ADDRESS
+            , ADDRESSDETAIL AS ADDRESSDETAIL
+            , STATE AS STATE
+            , TEL AS TEL
+            , SORT AS SORT
+        FROM
+            T_CINEMA
+        WHERE
+            1 = 1
+        ORDER BY
+            IDX DESC
+    </select>
+
+    <select id="cinemaDetail" resultType="map">
+        SELECT
+            IDX AS
+            , NAME AS NAME
+            , CODE AS CODE
+            , POST AS POST
+            , ADDRESS AS ADDRESS
+            , ADDRESSDETAIL AS ADDRESSDETAIL
+            , STATE AS STATE
+            , TEL AS TEL
+        FROM
+            T_CINEMA
+        WHERE
+            IDX = #{idx}
+        ORDER BY
+            IDX DESC
+    </select>
+
+</mapper>

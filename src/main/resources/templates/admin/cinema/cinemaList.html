@@ -3,9 +3,9 @@
     <head th:replace="/admin/fragment/header.html :: header"></head>
     <body class="sb-nav-fixed">
         <script>
-            function memberDel(idx) {
+            function cinemaDel(idx) {
                 if(confirm("삭제하시겠습니까?")) {
-                    location.href= "/admin/member/memberDel?idx=" + idx;
+                    location.href= "/admin/cinema/cinemaDel?idx=" + idx;
                 }
             }
         </script>
@@ -17,15 +17,15 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">회원 목록</h1>
+                        <h1 class="mt-4">영화관 목록</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.html">홈</a></li>
-                            <li class="breadcrumb-item">회원 관리</li>
-                            <li class="breadcrumb-item active">회원 목록</li>
+                            <li class="breadcrumb-item">영화관 관리</li>
+                            <li class="breadcrumb-item active">영화관 목록</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-body">
-                                회원 목록 입니다.
+                                영화관 목록 입니다.
                             </div>
                         </div>
                         <div class="card mb-4">
@@ -37,35 +37,32 @@
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>아이디</th>
-                                            <th>이름</th>
-                                            <th>핸드폰</th>
-                                            <th>등급</th>
+                                            <th>영화관명</th>
+                                            <th>코드</th>
                                             <th>상태</th>
+                                            <th>전화번호</th>
                                             <th>상세화면</th>
                                             <th>삭제</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>아이디</th>
-                                            <th>이름</th>
-                                            <th>핸드폰</th>
-                                            <th>등급</th>
+                                            <th>영화관명</th>
+                                            <th>코드</th>
                                             <th>상태</th>
+                                            <th>전화번호</th>
                                             <th>상세화면</th>
                                             <th>삭제</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr th:each="member : ${members}">
-                                            <td th:text="${member.ID}">Tiger Nixon</td>
-                                            <td th:text="${member.NAME}">System Architect</td>
-                                            <td th:text="${member.MOBILE}">Edinburgh</td>
-                                            <td th:text="${member.GRADE}">61</td>
-                                            <td th:text="${member.STATE}">2011/04/25</td>
-                                            <td><a class="btn btn-info" href="#" th:href="@{/admin/member/memberDetail(idx=${member.IDX})}" role="button">상세</a></td>
-                                            <td><a class="btn btn-danger" href="#"  role="button" th:onclick="'javascript:memberDel(' + ${member.IDX} + ')'">삭제</a></td>
+                                        <tr th:each="cinema : ${cinemas}">
+                                            <td th:text="${cinema.NAME}">Tiger Nixon</td>
+                                            <td th:text="${cinema.CODE}">System Architect</td>
+                                            <td th:text="${cinema.STATE}">Edinburgh</td>
+                                            <td th:text="${cinema.TEL}">2011/04/25</td>
+                                            <td><a class="btn btn-info" href="#" th:href="@{/admin/cinema/cinemaDetail(idx=${cinema.IDX})}" role="button">상세</a></td>
+                                            <td><a class="btn btn-danger" href="#"  role="button" th:onclick="'javascript:cinemaDel(' + ${cinema.IDX} + ')'">삭제</a></td>
                                         </tr>
                                     </tbody>
                                 </table>

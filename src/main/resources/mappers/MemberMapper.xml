@@ -8,7 +8,7 @@
         SELECT
             M.IDX AS IDX
             , U.ID AS ID
-            , U.STATUS AS STATUS
+            , U.STATE AS STATE
             , M.NAME AS NAME
             , M.MOBILE AS MOBILE
             , M.POST AS POST
@@ -25,4 +25,58 @@
         ORDER BY
             M.IDX DESC
     </select>
+
+    <select id="memberDetail" resultType="map">
+        SELECT
+            M.IDX AS IDX
+            , U.ID AS ID
+            , U.STATE AS STATE
+            , M.NAME AS NAME
+            , M.MOBILE AS MOBILE
+            , M.POST AS POST
+            , M.ADDRESS AS ADDRESS
+            , M.ADDRESSDETAIL AS ADDRESSDETAIL
+            , M.GRADE AS GRADE
+            , M.POINT AS POINT
+            , M.EMAIL AS EMAIL
+        FROM
+            T_USER U
+            INNER JOIN T_MEMBER M ON (U.IDX=M.IDX)
+        WHERE
+            M.IDX = #{idx}
+    </select>
+    
+    <update id="memberUpdate">
+        UPDATE T_MEMBER SET
+            <if test="name != null and name != ''">
+                NAME = #{name}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                , MOBILE = #{mobile}
+            </if>
+            <if test="post != null and post != ''">
+                , POST = #{post}
+            </if>
+            <if test="address != null and address != ''">
+                , ADDRESS = #{address}
+            </if>
+            <if test="addressDetail != null and addressDetail != ''">
+                , ADDRESSDETAIL = #{addressDetail}
+            </if>
+            <if test="email != null and email != ''">
+                , EMAIL = #{email}
+            </if>
+            <if test="grade != null and grade != ''">
+                , GRADE = #{grade}
+            </if>
+            <if test="point != null and point != ''">
+                , POINT = #{point}
+            </if>
+        WHERE
+            IDX = #{idx}
+    </update>
+
+    <delete id="memberDel">
+        DELETE FROM T_MEMBER WHERE IDX = #{idx}
+    </delete>
 </mapper>
