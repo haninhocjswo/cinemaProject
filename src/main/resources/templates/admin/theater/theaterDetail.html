@@ -24,7 +24,7 @@
         }).open();
     }
 
-    function cinemaUpdate(f) {
+    function theaterUpdate(f) {
         if(f.name.value == "") {
             alert("이름을 입력해주세요.");
             f.name.focus();
@@ -45,11 +45,6 @@
             f.address.focus();
             return;
         }
-        if(f.tel.value == "") {
-            alert("전화번호를 입력해주세요.");
-            f.tel.focus();
-            return;
-        }
 
         f.submit();
     }
@@ -67,64 +62,40 @@
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
                             <div class="card-header"><h3 class="text-center font-weight-light my-4">회원 수정</h3></div>
                             <div class="card-body">
-                                <form name="cinemaForm" action="/admin/cinema/cinemaUpdate" method="post">
-                                    <input type="hidden" id="idx" name="idx" th:value="${cinema.IDX}">
+                                <form name="theaterForm" action="/admin/theater/theaterUpdate" method="post">
+                                    <input type="hidden" id="idx" name="idx" th:value="${theater.IDX}">
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input class="form-control" id="name" name="name" type="text" placeholder="영화관명" th:value="${cinema.NAME}" />
-                                                <label for="name">영화관명</label>
+                                                <input class="form-control" id="cinemaName" name="cinemaName" type="text" placeholder="상영관명" th:value="${theater.CINEMANAME}" />
+                                                <label for="cinemaName">영화관명</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <input class="form-control" id="code" name="code" type="text" placeholder="코드" th:value="${cinema.CODE}" />
-                                                <label for="code">코드</label>
+                                                <input class="form-control" id="name" name="name" type="text" placeholder="코드" th:value="${theater.NAME}" />
+                                                <label for="name">상영관명</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3 mb-md-0">
-                                                <input class="form-control" id="tel" name="tel" type="text" placeholder="-없이 입력해주세요" th:value="${cinema.TEL}" />
-                                                <label for="tel">전화번호</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-floating mb-3 mb-md-0">
                                                 <select class="form-control" id="state" name="state">
-                                                    <option th:selected="${cinema.STATE} == '100'" th:value="100" >미오픈</option>
-                                                    <option th:selected="${cinema.STATE} == '200'" th:value="200" >오픈</option>
-                                                    <option th:selected="${cinema.STATE} == '300'" th:value="300" >폐관</option>
+                                                    <option th:selected="${theater.STATE} == '100'" th:value="100" >미오픈</option>
+                                                    <option th:selected="${theater.STATE} == '200'" th:value="200" >오픈</option>
+                                                    <option th:selected="${theater.STATE} == '300'" th:value="300" >폐관</option>
                                                 </select>
                                                 <label for="state">상태</label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <div class="form-floating mb-3 mb-md-0">
-                                                <input class="form-control" id="post" name="post" type="text" placeholder="우편번호" th:value="${cinema.POST}" />
-                                                <label for="post">우편번호</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 mb-0">
-                                            <div class="d-grid"><button class="btn btn-primary btn-block" type="button" th:text="우편번호찾기" onclick="daumAddressApi();"></button></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="address" name="address" type="text" placeholder="주소" th:value="${cinema.ADDRESS}" />
-                                        <label for="address">주소</label>
-                                    </div>
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="addressDetail" name="addressDetail" type="text" placeholder="상세주소" th:value="${cinema.ADDRESSDETAIL}" />
-                                        <label for="addressDetail">상세주소</label>
+
+                                    <div class="mt-4 mb-0">
+                                        <div class="d-grid"><button type="button" class="btn btn-primary btn-block" onclick="theaterUpdate(this.form);" th:text="영화관수정"></div>
                                     </div>
                                     <div class="mt-4 mb-0">
-                                        <div class="d-grid"><button type="button" class="btn btn-primary btn-block" onclick="cinemaUpdate(this.form);" th:text="영화관수정"></div>
-                                    </div>
-                                    <div class="mt-4 mb-0">
-                                        <div class="d-grid"><a class="btn btn-primary btn-block" th:href="@{/admin/cinema/cinemaList}">목록으로</a></div>
+                                        <div class="d-grid"><a class="btn btn-primary btn-block" th:href="@{/admin/theater/theaterList}">목록으로</a></div>
                                     </div>
                                 </form>
                             </div>

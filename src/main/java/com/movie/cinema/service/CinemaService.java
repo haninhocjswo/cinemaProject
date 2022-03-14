@@ -1,10 +1,12 @@
 package com.movie.cinema.service;
 
 import com.movie.cinema.mapper.CinemaMapper;
+import com.movie.cinema.utils.CommonCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +26,20 @@ public class CinemaService {
     }
 
     public Map<String, Object> cinemaDetail(Long idx) {
-        return cinemaMapper.cinemaDetail(idx);
+        Map<String, Object> map = cinemaMapper.cinemaDetail(idx);
+        return map;
+    }
+
+    public void cinemaUpdate(Map<String, Object> map) {
+        cinemaMapper.cinemaUpdate(map);
+    }
+
+    public void cinemaDel(Long idx) {
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.clear();
+
+        paramMap.put("idx", idx);
+        paramMap.put("state", CommonCode.CINEMA_STATE_CLOSE);
+        cinemaMapper.cinemaUpdate(paramMap);
     }
 }

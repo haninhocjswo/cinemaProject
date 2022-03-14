@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.movie.cinema.mapper.TheaterMapper">
+    <select id="theaterList" resultType="map">
+        SELECT
+            T.IDX AS IDX
+            , T.CINEMAIDX AS CINEMAIDX
+            , T.NAME AS NAME
+            , T.SEATS AS SEATS
+            , T.STATE AS STATE
+            , C.NAME AS CINEMANAME
+            , C.CODE AS CODE
+        FROM
+            T_CINEMA C
+            INNER JOIN T_THEATER T ON (C.IDX=T.CINEMAIDX)
+        WHERE
+            1 = 1
+        ORDER BY
+            T.IDX DESC
+    </select>
+
+    <select id="theaterDetail" resultType="map">
+        SELECT
+            T.IDX AS IDX
+            , T.CINEMAIDX AS CINEMAIDX
+            , T.NAME AS NAME
+            , T.SEATS AS SEATS
+            , T.STATE AS STATE
+            , C.NAME AS CINEMANAME
+            , C.CODE AS CODE
+        FROM
+            T_CINEMA C
+            INNER JOIN T_THEATER T ON (C.IDX=T.CINEMAIDX)
+        WHERE
+            T.IDX = #{idx}
+    </select>
+</mapper>

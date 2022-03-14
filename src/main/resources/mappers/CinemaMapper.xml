@@ -25,7 +25,7 @@
 
     <select id="cinemaDetail" resultType="map">
         SELECT
-            IDX AS
+            IDX AS IDX
             , NAME AS NAME
             , CODE AS CODE
             , POST AS POST
@@ -41,4 +41,30 @@
             IDX DESC
     </select>
 
+    <update id="cinemaUpdate">
+        UPDATE T_CINEMA SET
+            <if test="state != null and state != ''">
+                STATE = #{state}
+            </if>
+            <if test="name != null and name != ''">
+                , NAME = #{name}
+            </if>
+            <if test="code != null and code != ''">
+                , CODE = #{code}
+            </if>
+            <if test="post != null and post != ''">
+                , POST = #{post}
+            </if>
+            <if test="address != null and address != ''">
+                , ADDRESS = #{address}
+            </if>
+            <if test="addressDetail != null and addressDetail != ''">
+                , ADDRESSDETAIL = #{addressDetail}
+            </if>
+            <if test="tel != null and tel != ''">
+                , TEL = #{tel}
+            </if>
+        WHERE
+            IDX = #{idx}
+    </update>
 </mapper>

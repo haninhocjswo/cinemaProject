@@ -37,8 +37,23 @@ public class AdminCinemaController {
 
         cinema.clear();
 
+        cinema.putAll(cinemaService.cinemaDetail(idx));
         mav.addObject("cinema", cinema);
         mav.setViewName("admin/cinema/cinemaDetail");
+        return mav;
+    }
+
+    @RequestMapping("/cinemaUpdate")
+    public ModelAndView cinemaUpdate(@RequestParam(required = false) Map<String, Object> map, ModelAndView mav) {
+        cinemaService.cinemaUpdate(map);
+        mav.setViewName("redirect:/admin/cinema/cinemaList");
+        return mav;
+    }
+
+    @RequestMapping("/cinemaDel")
+    public ModelAndView cinemaDel(Long idx, ModelAndView mav) {
+        cinemaService.cinemaDel(idx);
+        mav.setViewName("redirect:/admin/cinema/cinemaList");
         return mav;
     }
 }

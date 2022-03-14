@@ -9,4 +9,5 @@ import java.util.Map;
 public interface CinemaMapper {
     public List<Map<String, Object>> cinemaList(Map<String, Object> map);
     public Map<String, Object> cinemaDetail(Long idx);
+    public void cinemaUpdate(Map<String, Object> map);
 }
