@@ -37,4 +37,22 @@
         WHERE
             T.IDX = #{idx}
     </select>
+
+    <update id="theaterUpdate">
+        UPDATE T_THEATER SET
+            <if test="state != null and state != ''">
+                STATE = #{state}
+            </if>
+            <if test="cinemaIdx != null and cinemaIdx != ''">
+                , CINEMAIDX = #{cinemaIdx}
+            </if>
+            <if test="seats != null and seats != ''">
+                , SEATS = #{seats}
+            </if>
+            <if test="name != null and name != ''">
+                , NAME = #{name}
+            </if>
+        WHERE
+            IDX = #{idx}
+    </update>
 </mapper>

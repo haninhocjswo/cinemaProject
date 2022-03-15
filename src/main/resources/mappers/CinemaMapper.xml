@@ -19,6 +19,9 @@
             T_CINEMA
         WHERE
             1 = 1
+            <if test="state != null and state != ''">
+                AND STATE = #{state}
+            </if>
         ORDER BY
             IDX DESC
     </select>

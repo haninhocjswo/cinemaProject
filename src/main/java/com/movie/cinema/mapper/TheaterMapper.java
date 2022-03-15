@@ -9,4 +9,5 @@ import java.util.Map;
 public interface TheaterMapper {
     public List<Map<String, Object>> theaterList(Map<String, Object> paramMap);
     public Map<String, Object> theaterDetail(Long idx);
+    public void theaterUpdate(Map<String, Object> paramMap);
 }

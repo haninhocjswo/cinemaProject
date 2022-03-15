@@ -2,6 +2,7 @@ package com.movie.cinema.service;
 
 import com.movie.cinema.mapper.CinemaMapper;
 import com.movie.cinema.mapper.TheaterMapper;
+import com.movie.cinema.utils.CommonCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +39,18 @@ public class TheaterService {
         theater.clear();
         theater.putAll(theaterMapper.theaterDetail(idx));
         return theater;
+    }
+
+    public void theaterUpdate(Map<String, Object> paramMap) {
+        theaterMapper.theaterUpdate(paramMap);
+    }
+
+    public void theaterDel(Long idx) {
+        Map<String, Object> paramMap = new HashMap<>();
+
+        paramMap.clear();
+        paramMap.put("idx", idx);
+        paramMap.put("state", CommonCode.THEATER_STATE_CLOSE);
+        theaterMapper.theaterUpdate(paramMap);
     }
 }

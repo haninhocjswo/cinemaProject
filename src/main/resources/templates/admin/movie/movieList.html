@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="/admin/fragment/header.html :: header"></head>
+    <body class="sb-nav-fixed">
+        <script>
+            function movieDel(idx) {
+                if(confirm("삭제하시겠습니까?")) {
+                    location.href= "/admin/movie/movieDel?idx=" + idx;
+                }
+            }
+        </script>
+        <nav th:replace="/admin/fragment/topnav.html :: topnav"></nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav th:replace="/admin/fragment/sidenav.html :: sidenav"></nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">영화 목록</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item"><a href="index.html">홈</a></li>
+                            <li class="breadcrumb-item">영화 관리</li>
+                            <li class="breadcrumb-item active">영화 목록</li>
+                        </ol>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                영화 목록 입니다.
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                영화 목록
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>영화관명</th>
+                                            <th>상영관명</th>
+                                            <th>코드</th>
+                                            <th>상태</th>
+                                            <th>좌석수</th>
+                                            <th>상세화면</th>
+                                            <th>삭제</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>영화관명</th>
+                                            <th>상영관명</th>
+                                            <th>코드</th>
+                                            <th>상태</th>
+                                            <th>좌석수</th>
+                                            <th>상세화면</th>
+                                            <th>삭제</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr th:each="movie : ${movies}">
+                                            <td th:text="${movie.CINEMANAME}">Tiger Nixon</td>
+                                            <td th:text="${movie.NAME}">Tiger Nixon</td>
+                                            <td th:text="${movie.CODE}">System Architect</td>
+                                            <td th:text="${movie.STATE}">Edinburgh</td>
+                                            <td th:text="${movie.SEATS}">2011/04/25</td>
+                                            <td><a class="btn btn-info" href="#" th:href="@{/admin/movie/movieDetail(idx=${movie.IDX})}" role="button">상세</a></td>
+                                            <td><a class="btn btn-danger" href="#"  role="button" th:onclick="'javascript:movieDel(' + ${movie.IDX} + ')'">삭제</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <footer th:replace="/admin/fragment/footer.html :: footer"></footer>
+            </div>
+        </div>
+        <script th:replace="/admin/fragment/tablejs.html :: tablejs"></script>
+    </body>
+</html>
