@@ -1,5 +1,6 @@
 package com.movie.cinema.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,9 +16,55 @@ public class MovieApi {
     private final String REQUEST_URL = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json";
     private final String API_KEY = "5d088f8907f9b753aecb98b644021534";
 
-    private final SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+    private final SimpleDateFormat df = new SimpleDateFormat("yyyy");
 
-    //url 파라미터문자 생성
+    public Map<String, Object> totalPage() {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.clear();
+        Integer total = 0;
+        Integer totalPage = 0;
+        Calendar cal = Calendar.getInstance();
+        cal.getTime();
+        String year = df.format(cal.getTime());
+        String curPage = "1";
+        String itemPerPage = "1";
+        String openStartDt = year;
+        String openEndDdt = year;
+
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.clear();
+        paramMap.put("key", API_KEY);
+        paramMap.put("curPage", curPage);
+        paramMap.put("itemPerPage", itemPerPage);
+        paramMap.put("openStartDt", openStartDt);
+        paramMap.put("openEndDdt", openEndDdt);
+
+        try {
+            URL requestUrl = new URL(REQUEST_URL + "?" + makeQueryString(paramMap));
+            HttpURLConnection conn = (HttpURLConnection) requestUrl.openConnection();
+
+            conn.setRequestMethod("GET");
+            conn.setDoInput(true);
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            String readLine = null;
+            StringBuffer response = new StringBuffer();
+            while ((readLine = br.readLine()) != null) {
+                response.append(readLine);
+            }
+
+            JSONObject responseBody = new JSONObject(response.toString());
+            total = Integer.parseInt(String.valueOf(responseBody.getJSONObject("movieListResult").getJSONObject("totCnt")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        resultMap.put("year", year);
+        resultMap.put("totalPage", totalPage);
+
+        return resultMap;
+    }
+
     public String makeQueryString(Map<String, Object> paramMap) {
         final StringBuilder sb =new StringBuilder();
 
@@ -31,11 +78,23 @@ public class MovieApi {
         return sb.toString();
     }
 
-    public void requestApi() {
-        String curPage = "1";
+    public Map<String, Object> jsonObjectToMap(JSONObject jsonObject) {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.clear();
+
+        try {
+            return new ObjectMapper().readValue(jsonObject.toString(), Map.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Map<String, Object>> requestApi(Integer currentPage, String year) {
+        String curPage = String.valueOf(currentPage);
         String itemPerPage = "20";
-        String openStartDt = "2022";
-        String openEndDdt = "2022";
+        String openStartDt = year;
+        String openEndDdt = year;
+        List<Map<String, Object>> responseMapList = new ArrayList<>();
 
         Map<String, Object> requestMap = new HashMap<>();
         requestMap.clear();
@@ -60,18 +119,17 @@ public class MovieApi {
             }
 
             JSONObject responseBody = new JSONObject(response.toString());
-            List<Map<String, Object>> responseMapList = new ArrayList<>();
-            Map<String, Object> responseMap = new HashMap<>();
 
-            responseMapList.clear();
-            responseMap.clear();
-
-            JSONArray jsonMovieList = responseBody.getJSONArray("movieList");
-
+            JSONArray jsonMovieList = responseBody.getJSONObject("movieListResult").getJSONArray("movieList");
+            for(Object jsonMovieMap : jsonMovieList) {
+                responseMapList.add(jsonObjectToMap((JSONObject) jsonMovieMap));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return responseMapList;
 /*
         key	문자열(필수)	발급받은키 값을 입력합니다.
         curPage	문자열	현재 페이지를 지정합니다.(default : “1”)
