@@ -20,18 +20,16 @@ public class MovieApi {
 
     public Map<String, Object> totalPage() {
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.clear();
         Integer total = 0;
-        Integer totalPage = 0;
         Calendar cal = Calendar.getInstance();
-        cal.getTime();
         String year = df.format(cal.getTime());
         String curPage = "1";
         String itemPerPage = "1";
         String openStartDt = year;
         String openEndDdt = year;
-
         Map<String, Object> paramMap = new HashMap<>();
+
+        resultMap.clear();
         paramMap.clear();
         paramMap.put("key", API_KEY);
         paramMap.put("curPage", curPage);
@@ -54,14 +52,14 @@ public class MovieApi {
             }
 
             JSONObject responseBody = new JSONObject(response.toString());
-            total = Integer.parseInt(String.valueOf(responseBody.getJSONObject("movieListResult").getJSONObject("totCnt")));
+            total = Integer.parseInt(String.valueOf(responseBody.getJSONObject("movieListResult").get("totCnt")));
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         resultMap.put("year", year);
-        resultMap.put("totalPage", totalPage);
-
+        resultMap.put("totalPage", Math.ceil(total/20.0));
+        System.out.println("total :: " + total);
         return resultMap;
     }
 

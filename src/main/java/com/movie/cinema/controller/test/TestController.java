@@ -2,6 +2,7 @@ package com.movie.cinema.controller.test;
 
 import com.movie.cinema.api.MovieApi;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,8 +17,17 @@ public class TestController {
     @RequestMapping("/test")
     public String test() {
         MovieApi movieApi = new MovieApi();
+        Map<String, Object> map = new HashMap<>();
 
-        movieApi.totalPage();
+        map.clear();
+        map.putAll(movieApi.totalPage());
+
+        System.out.println("cxcxcxcxc->" + map.entrySet());
+
+        ModelAndView mav = new ModelAndView();
+
+        mav.setViewName("test");
+        mav.addObject("message", "zzzzz");
 
         return "test";
     }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.movie.cinema.mapper.MovieMapper">
+    <select id="movieList" resultMap="map">
+        SELECT
+            IDX AS IDX
+            , TITLE AS TITLE
+            , PRODUCTOR AS PRODUCTOR
+            , GENRE AS GENRE
+            , DIRECTOR AS DIRECTOR
+            , STATE AS STATE
+            , CODE AS CODE
+            , ACTORS AS ACTORS
+        FROM
+            T_MOVIE
+        WHERE
+            1 = 1
+        ORDER BY
+            IDX DESC
+    </select>
+
+    <insert id="movieSave">
+        INSERT INTO MOVIE
+            (TITLE, PRODUCTOR, GENRE, DIRECTOR, STATE, CODE, ACTORS)
+        VALUES
+            (#{title}, #{productor}, #{genre}, #{director}, #{state}, #{code}, #{actors})
+    </insert>
+</mapper>
