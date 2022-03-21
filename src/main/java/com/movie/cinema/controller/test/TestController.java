@@ -22,7 +22,6 @@ public class TestController {
         map.clear();
         map.putAll(movieApi.totalPage());
 
-        System.out.println("cxcxcxcxc->" + map.entrySet());
 
         ModelAndView mav = new ModelAndView();
 

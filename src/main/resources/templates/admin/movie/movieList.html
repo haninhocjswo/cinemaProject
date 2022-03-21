@@ -37,33 +37,30 @@
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>영화관명</th>
-                                            <th>상영관명</th>
-                                            <th>코드</th>
+                                            <th>제목</th>
+                                            <th>영화코드</th>
+                                            <th>장르</th>
                                             <th>상태</th>
-                                            <th>좌석수</th>
                                             <th>상세화면</th>
                                             <th>삭제</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>영화관명</th>
-                                            <th>상영관명</th>
-                                            <th>코드</th>
+                                            <th>제목</th>
+                                            <th>영화코드</th>
+                                            <th>장르</th>
                                             <th>상태</th>
-                                            <th>좌석수</th>
                                             <th>상세화면</th>
                                             <th>삭제</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <tr th:each="movie : ${movies}">
-                                            <td th:text="${movie.CINEMANAME}">Tiger Nixon</td>
-                                            <td th:text="${movie.NAME}">Tiger Nixon</td>
-                                            <td th:text="${movie.CODE}">System Architect</td>
+                                            <td th:text="${movie.TITLE}">Tiger Nixon</td>
+                                            <td th:text="${movie.CODE}">Tiger Nixon</td>
+                                            <td th:text="${movie.GENRE}">System Architect</td>
                                             <td th:text="${movie.STATE}">Edinburgh</td>
-                                            <td th:text="${movie.SEATS}">2011/04/25</td>
                                             <td><a class="btn btn-info" href="#" th:href="@{/admin/movie/movieDetail(idx=${movie.IDX})}" role="button">상세</a></td>
                                             <td><a class="btn btn-danger" href="#"  role="button" th:onclick="'javascript:movieDel(' + ${movie.IDX} + ')'">삭제</a></td>
                                         </tr>

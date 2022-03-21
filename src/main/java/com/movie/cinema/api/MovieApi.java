@@ -59,7 +59,6 @@ public class MovieApi {
 
         resultMap.put("year", year);
         resultMap.put("totalPage", Math.ceil(total/20.0));
-        System.out.println("total :: " + total);
         return resultMap;
     }
 

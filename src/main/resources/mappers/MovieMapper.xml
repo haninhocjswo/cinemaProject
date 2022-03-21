@@ -22,6 +22,15 @@
             IDX DESC
     </select>
 
+    <select id="movieByCode" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            T_MOVIE
+        WHERE
+            CODE = #{code}
+    </select>
+
     <insert id="movieSave">
         INSERT INTO MOVIE
             (TITLE, PRODUCTOR, GENRE, DIRECTOR, STATE, CODE, ACTORS)
