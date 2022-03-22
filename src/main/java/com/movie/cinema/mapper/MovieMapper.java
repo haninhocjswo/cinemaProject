@@ -9,7 +9,7 @@ import java.util.Map;
 @Mapper
 public interface MovieMapper {
     public List<Map<String, Object>> movieList(Map<String, Object> paramMap);
-    public Integer movieByCode(String code);
+    public int movieByCode(String code);
     public Movie movieDetail(Long idx);
     public void movieSave(Movie movie);
     public void movieUpdate(Movie movie);

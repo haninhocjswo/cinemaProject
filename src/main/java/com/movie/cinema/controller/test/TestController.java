@@ -16,17 +16,6 @@ public class TestController {
 
     @RequestMapping("/test")
     public String test() {
-        MovieApi movieApi = new MovieApi();
-        Map<String, Object> map = new HashMap<>();
-
-        map.clear();
-        map.putAll(movieApi.totalPage());
-
-
-        ModelAndView mav = new ModelAndView();
-
-        mav.setViewName("test");
-        mav.addObject("message", "zzzzz");
 
         return "test";
     }

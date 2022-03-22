@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.movie.cinema.mapper.MovieMapper">
-    <select id="movieList" resultMap="map">
+    <select id="movieList" resultType="map">
         SELECT
             IDX AS IDX
             , TITLE AS TITLE
@@ -22,7 +22,7 @@
             IDX DESC
     </select>
 
-    <select id="movieByCode" resultType="int">
+    <select id="movieByCode" resultType="_int">
         SELECT
             COUNT(*)
         FROM
@@ -32,7 +32,7 @@
     </select>
 
     <insert id="movieSave">
-        INSERT INTO MOVIE
+        INSERT INTO T_MOVIE
             (TITLE, PRODUCTOR, GENRE, DIRECTOR, STATE, CODE, ACTORS)
         VALUES
             (#{title}, #{productor}, #{genre}, #{director}, #{state}, #{code}, #{actors})

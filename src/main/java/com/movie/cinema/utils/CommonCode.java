@@ -15,4 +15,9 @@ public final class CommonCode {
     public static final String THEATER_STATE_WAIT = "100";
     public static final String THEATER_STATE_OPEN = "200";
     public static final String THEATER_STATE_CLOSE = "300";
+
+    //영화 상태
+    public static final String MOVIE_STATE_WAIT = "100";    //개봉예정
+    public static final String MOVIE_STATE_OPEN = "200";    //개봉
+    public static final String MOVIE_STATE_CLOSE = "300";   //폐막
 }
