@@ -42,4 +42,15 @@ public class AdminMovieController {
         return "redirect:/admin/movie/movieList";
     }
 
+    @RequestMapping("/movieDetail")
+    public ModelAndView movieDetail(@RequestParam Long idx, ModelAndView mav) {
+        Movie movie = new Movie();
+
+        movie = movieService.movieDetail(idx);
+        mav.addObject("movie", movie);
+        mav.setViewName("admin/movie/movieDetail");
+
+        return mav;
+    }
+
 }

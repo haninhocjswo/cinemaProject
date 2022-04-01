@@ -56,11 +56,9 @@ public class MovieApi {
     public List<Map<String, Object>> requestApi(String dt) {
         List<Map<String, Object>> result = new ArrayList<>();
         Map<String, Object> requestMap = new HashMap<>();
-        Map<String, Object> movie = new HashMap<>();
 
         result.clear();
         requestMap.clear();
-        movie.clear();
 
         try {
             Date day = df.parse(dt);
@@ -86,7 +84,7 @@ public class MovieApi {
 
             result.clear();
             for(Object boxOffice : boxOfficeList) {
-                movie.clear();
+                Map<String, Object> movie = new HashMap<>();
                 movie.putAll(requestMovieDetail(jsonToMap((JSONObject) boxOffice).get("movieCd").toString()));
                 result.add(movie);
             }

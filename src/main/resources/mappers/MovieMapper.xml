@@ -31,6 +31,24 @@
             CODE = #{code}
     </select>
 
+    <select id="movieDetail" resultType="com.movie.cinema.model.Movie">
+        SELECT
+            IDX AS idx
+            , TITLE AS TITLE
+            , PRODUCTOR AS productor
+            , GENRE AS genre
+            , DIRECTOR AS director
+            , STATE AS state
+            , CODE AS code
+            , ACTORS AS actors
+            , REGDATE AS regDate
+            , MODDATE AS modDate
+        FROM
+            T_MOVIE
+        WHERE
+            IDX = #{idx}
+    </select>
+
     <insert id="movieSave">
         INSERT INTO T_MOVIE
             (TITLE, PRODUCTOR, GENRE, DIRECTOR, STATE, CODE, ACTORS)

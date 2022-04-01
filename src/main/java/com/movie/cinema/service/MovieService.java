@@ -8,6 +8,7 @@ import com.movie.cinema.utils.CommonUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,10 +40,9 @@ public class MovieService {
         movieList.addAll(movieApi.requestApi("2022-02-22"));
         if(movieList.size() > 0) {
             for(Map<String, Object> movieMap : movieList) {
-                System.out.println("코드 ::: " + String.valueOf(movieMap.get("movieCd")));
                 isExist = 0;
                 isExist = movieMapper.movieByCode(String.valueOf(movieMap.get("movieCd")));
-                System.out.println("count :: " + isExist);
+
                 if(isExist == 0) {
                     Movie movie = new Movie();
                     movie.setCode(String.valueOf(movieMap.get("movieCd")));
@@ -57,6 +57,12 @@ public class MovieService {
                 }
             }
         }
+    }
+
+    public Movie movieDetail(Long idx) {
+        Movie movie = new Movie();
+        movie = movieMapper.movieDetail(idx);
+        return movie;
     }
 
 }
